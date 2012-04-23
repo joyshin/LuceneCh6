@@ -1,4 +1,4 @@
-package net.skcomms.lucene.ch6;
+package net.skcomms.lucene.ch6.test;
 
 /**
  * Copyright Manning Publications Co.
@@ -18,6 +18,7 @@ package net.skcomms.lucene.ch6;
 import java.io.IOException;
 
 import junit.framework.TestCase;
+import net.skcomms.lucene.ch6.DistanceComparatorSource;
 
 import org.apache.lucene.analysis.WhitespaceAnalyzer;
 import org.apache.lucene.document.Document;
@@ -91,9 +92,12 @@ public class DistanceSortingTest extends TestCase {
 		final FieldDoc fieldDoc = (FieldDoc) docs.scoreDocs[0]; // #4
 
 		assertEquals("(10,10) -> (9,6) = sqrt(17)", new Float(Math.sqrt(17)), fieldDoc.fields[0]); // #5
+		System.out.println("(10,10) -> (9,6) = sqrt(17) ||" + " Math.sqrt(17) : " + new Float(Math.sqrt(17)).toString()
+				+ " || fieldDoc.fields[0] : " + fieldDoc.fields[0].toString());
 
 		final Document document = searcher.doc(fieldDoc.doc); // #6
 		assertEquals("Los Betos", document.get("name"));
+		System.out.println("Los Betos || " + "document.get(\"name\") : " + document.get("name").toString() + "\n");
 
 		// dumpDocs(sort, docs);
 	}
@@ -110,6 +114,11 @@ public class DistanceSortingTest extends TestCase {
 		final TopDocs hits = searcher.search(query, null, 10, sort);
 
 		assertEquals("closest", "El Charro", searcher.doc(hits.scoreDocs[0].doc).get("name"));
+		System.out.println("Closest => " + "El Charro || " + "searcher.doc(hits.scoreDocs[0].doc).get(\"name\") : "
+				+ searcher.doc(hits.scoreDocs[0].doc).get("name").toString());
+
 		assertEquals("furthest", "Los Betos", searcher.doc(hits.scoreDocs[3].doc).get("name"));
+		System.out.println("Furthest => " + "Los Betos || " + "searcher.doc(hits.scoreDocs[3].doc).get(\"name\") : "
+				+ searcher.doc(hits.scoreDocs[3].doc).get("name").toString());
 	}
 }
