@@ -1,11 +1,11 @@
-package net.skcomms.lucene.joyshin.test;
+package net.skcomms.lucene.ch6.test;
 
 import java.util.Locale;
 
 import junit.framework.TestCase;
-import net.skcomms.lucene.joyshin.NumericDateRangeQueryParser;
-import net.skcomms.lucene.joyshin.NumericRangeQueryParser;
-import net.skcomms.lucene.joyshin.TestUtil;
+import net.skcomms.lucene.ch6.NumericDateRangeQueryParser;
+import net.skcomms.lucene.ch6.NumericRangeQueryParser;
+import net.skcomms.lucene.ch6.TestUtil;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.WhitespaceAnalyzer;

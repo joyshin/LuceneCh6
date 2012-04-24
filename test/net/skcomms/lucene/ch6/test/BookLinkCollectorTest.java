@@ -1,11 +1,11 @@
-package net.skcomms.lucene.joyshin.test;
+package net.skcomms.lucene.ch6.test;
 
 import static org.junit.Assert.assertEquals;
 
 import java.util.Map;
 
-import net.skcomms.lucene.joyshin.BookLinkCollector;
-import net.skcomms.lucene.joyshin.TestUtil;
+import net.skcomms.lucene.ch6.BookLinkCollector;
+import net.skcomms.lucene.ch6.TestUtil;
 
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.IndexSearcher;

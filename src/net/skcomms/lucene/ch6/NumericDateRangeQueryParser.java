@@ -1,4 +1,4 @@
-package net.skcomms.lucene.joyshin;
+package net.skcomms.lucene.ch6;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.queryParser.ParseException;

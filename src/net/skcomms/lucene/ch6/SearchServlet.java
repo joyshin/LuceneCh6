@@ -1,4 +1,4 @@
-package net.skcomms.lucene.joyshin;
+package net.skcomms.lucene.ch6;
 
 
 /*public class SearchServlet extends HttpServlet {

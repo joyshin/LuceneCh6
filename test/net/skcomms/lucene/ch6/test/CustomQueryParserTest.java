@@ -1,7 +1,7 @@
-package net.skcomms.lucene.joyshin.test;
+package net.skcomms.lucene.ch6.test;
 
 import static org.junit.Assert.assertTrue;
-import net.skcomms.lucene.joyshin.CustomQueryParser;
+import net.skcomms.lucene.ch6.CustomQueryParser;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.queryParser.ParseException;
