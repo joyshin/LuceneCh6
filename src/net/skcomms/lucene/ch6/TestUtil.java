@@ -43,6 +43,7 @@ public class TestUtil {
   public static Directory getBookIndexDirectory() throws IOException {
     // The build.xml ant script sets this property for us:
     return FSDirectory.open(new File(System.getProperty("index.dir")));
+    // return FSDirectory.open(new File("index.dir"));
   }
 
   public static int hitCount(IndexSearcher searcher, Query query) throws IOException {

@@ -14,21 +14,21 @@ import org.apache.lucene.store.Directory;
 import org.junit.Test;
 
 public class BookLinkCollectorTest {
-  public static final String INDEX_DIRECTORY = "indexDirectory";
+    public static final String INDEX_DIRECTORY = "indexDirectory";
 
-  @Test
-  public void testCollecting() throws Exception {
-    TermQuery query = new TermQuery(new Term("contents", "junit"));
-    // IndexSearcher searcher = new
-    // IndexSearcher(TestUtil.getBookIndexDirectory());
-    Directory directory = TestUtil.getBookIndexDirectory();
-    IndexSearcher searcher = new IndexSearcher(directory);
+    @Test
+    public void testCollecting() throws Exception {
+        TermQuery query = new TermQuery(new Term("contents", "junit"));
+        // IndexSearcher searcher = new
+        // IndexSearcher(TestUtil.getBookIndexDirectory());
+        Directory directory = TestUtil.getBookIndexDirectory();
+        IndexSearcher searcher = new IndexSearcher(directory);
 
-    BookLinkCollector collector = new BookLinkCollector();
-    searcher.search(query, collector);
+        BookLinkCollector collector = new BookLinkCollector();
+        searcher.search(query, collector);
 
-    Map linkMap = collector.getLinks();
-    assertEquals("java development with ant", linkMap.get("http://www.manning.com/antbook"));
-    searcher.close();
-  }
+        Map linkMap = collector.getLinks();
+        assertEquals("Lucene in Action", linkMap.get("http://www.manning.com/hatcher2/"));
+        searcher.close();
+    }
 }

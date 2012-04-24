@@ -31,39 +31,38 @@ import org.apache.lucene.search.Scorer;
  */
 
 public class AllDocCollector extends Collector {
-  List<ScoreDoc> docs = new ArrayList<ScoreDoc>();
-  private Scorer scorer;
-  private int docBase;
+    List<ScoreDoc> docs = new ArrayList<ScoreDoc>();
+    private Scorer scorer;
+    private int    docBase;
 
-  @Override
-  public boolean acceptsDocsOutOfOrder() {
-    return true;
-  }
+    @Override
+    public boolean acceptsDocsOutOfOrder() {
+        return true;
+    }
 
-  @Override
-  public void collect(int doc) throws IOException {
-    this.docs.add(
-        new ScoreDoc(doc + this.docBase, // #A
-            this.scorer.score())); // #B
-  }
+    @Override
+    public void collect(int doc) throws IOException {
+        this.docs.add(new ScoreDoc(doc + this.docBase, // #A
+                        this.scorer.score())); // #B
+    }
 
-  public List<ScoreDoc> getHits() {
-    return this.docs;
-  }
+    public List<ScoreDoc> getHits() {
+        return this.docs;
+    }
 
-  public void reset() {
-    this.docs.clear();
-  }
+    public void reset() {
+        this.docs.clear();
+    }
 
-  @Override
-  public void setNextReader(IndexReader reader, int docBase) {
-    this.docBase = docBase;
-  }
+    @Override
+    public void setNextReader(IndexReader reader, int docBase) {
+        this.docBase = docBase;
+    }
 
-  @Override
-  public void setScorer(Scorer scorer) {
-    this.scorer = scorer;
-  }
+    @Override
+    public void setScorer(Scorer scorer) {
+        this.scorer = scorer;
+    }
 }
 
 /*

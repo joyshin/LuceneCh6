@@ -1,6 +1,5 @@
 package net.skcomms.lucene.ch6;
 
-
 /*public class SearchServlet extends HttpServlet {
  // import javax.servlet.http.*;
  // import javax.servlet.*;

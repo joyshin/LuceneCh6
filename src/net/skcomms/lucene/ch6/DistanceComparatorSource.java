@@ -25,94 +25,94 @@ import org.apache.lucene.search.SortField;
 
 // From chapter 6
 public class DistanceComparatorSource extends FieldComparatorSource { // #1
-	private class DistanceScoreDocLookupComparator // #4
-			extends FieldComparator {
-		private int[] xDoc, yDoc; // #5
-		private final float[] values; // #6
-		private float bottom; // #7
-		String fieldName;
+  private class DistanceScoreDocLookupComparator // #4
+      extends FieldComparator {
+    private int[] xDoc, yDoc; // #5
+    private final float[] values; // #6
+    private float bottom; // #7
+    String fieldName;
 
-		public DistanceScoreDocLookupComparator(final String fieldName, final int numHits) throws IOException {
-			values = new float[numHits];
-			this.fieldName = fieldName;
-		}
+    public DistanceScoreDocLookupComparator(final String fieldName, final int numHits) throws IOException {
+      this.values = new float[numHits];
+      this.fieldName = fieldName;
+    }
 
-		@Override
-		public int compare(final int slot1, final int slot2) { // #10
-			if (values[slot1] < values[slot2]) {
-				return -1; // #10
-			}
-			if (values[slot1] > values[slot2]) {
-				return 1; // #10
-			}
-			return 0; // #10
-		}
+    @Override
+    public int compare(final int slot1, final int slot2) { // #10
+      if (this.values[slot1] < this.values[slot2]) {
+        return -1; // #10
+      }
+      if (this.values[slot1] > this.values[slot2]) {
+        return 1; // #10
+      }
+      return 0; // #10
+    }
 
-		@Override
-		public int compareBottom(final int doc) { // #12
-			final float docDistance = getDistance(doc);
-			if (bottom < docDistance) {
-				return -1; // #12
-			}
-			if (bottom > docDistance) {
-				return 1; // #12
-			}
-			return 0; // #12
-		}
+    @Override
+    public int compareBottom(final int doc) { // #12
+      final float docDistance = this.getDistance(doc);
+      if (this.bottom < docDistance) {
+        return -1; // #12
+      }
+      if (this.bottom > docDistance) {
+        return 1; // #12
+      }
+      return 0; // #12
+    }
 
-		@Override
-		public void copy(final int slot, final int doc) { // #13
-			values[slot] = getDistance(doc); // #13
-		}
+    @Override
+    public void copy(final int slot, final int doc) { // #13
+      this.values[slot] = this.getDistance(doc); // #13
+    }
 
-		private float getDistance(final int doc) { // #9
-			final int deltax = xDoc[doc] - x; // #9
-			final int deltay = yDoc[doc] - y; // #9
-			return (float) Math.sqrt(deltax * deltax + deltay * deltay); // #9
-		}
+    private float getDistance(final int doc) { // #9
+      final int deltax = this.xDoc[doc] - DistanceComparatorSource.this.x; // #9
+      final int deltay = this.yDoc[doc] - DistanceComparatorSource.this.y; // #9
+      return (float) Math.sqrt(deltax * deltax + deltay * deltay); // #9
+    }
 
-		@Override
-		public void setBottom(final int slot) { // #11
-			bottom = values[slot];
-		}
+    @Override
+    public void setBottom(final int slot) { // #11
+      this.bottom = this.values[slot];
+    }
 
-		@Override
-		public void setNextReader(final IndexReader reader, final int docBase) throws IOException {
-			xDoc = FieldCache.DEFAULT.getInts(reader, "x"); // #8
-			yDoc = FieldCache.DEFAULT.getInts(reader, "y"); // #8
-		}
+    @Override
+    public void setNextReader(final IndexReader reader, final int docBase) throws IOException {
+      this.xDoc = FieldCache.DEFAULT.getInts(reader, "x"); // #8
+      this.yDoc = FieldCache.DEFAULT.getInts(reader, "y"); // #8
+    }
 
-		public int sortType() {
-			return SortField.CUSTOM;
-		}
+    public int sortType() {
+      return SortField.CUSTOM;
+    }
 
-		@Override
-		public Comparable value(final int slot) { // #14
-			return new Float(values[slot]); // #14
-		} // #14
-	}
+    @Override
+    public Comparable value(final int slot) { // #14
+      return new Float(this.values[slot]); // #14
+    } // #14
+  }
 
-	private final int x;
+  private final int x;
 
-	private final int y;
+  private final int y;
 
-	public DistanceComparatorSource(final int x, final int y) { // #2
-		this.x = x;
-		this.y = y;
-	}
+  public DistanceComparatorSource(final int x, final int y) { // #2
+    this.x = x;
+    this.y = y;
+  }
 
-	@Override
-	public FieldComparator newComparator(final java.lang.String fieldName, // #3
-			final int numHits, final int sortPos, // #3
-			final boolean reversed) // #3
-			throws IOException { // #3
-		return new DistanceScoreDocLookupComparator(fieldName, numHits);
-	}
+  @Override
+  public FieldComparator newComparator(final java.lang.String fieldName, // #3
+      final int numHits, final int sortPos, // #3
+      final boolean reversed) // #3
+      throws IOException { // #3
+    return new DistanceScoreDocLookupComparator(fieldName, numHits);
+  }
 
-	@Override
-	public String toString() {
-		return "Distance from (" + x + "," + y + ")";
-	}
+  @Override
+  public String toString() {
+    return "Distance from (" + this.x + "," + this.y + ")";
+  }
 }
 
 /*

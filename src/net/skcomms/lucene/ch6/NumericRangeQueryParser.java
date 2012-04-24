@@ -26,32 +26,27 @@ import org.apache.lucene.util.Version;
 // From chapter 6
 public class NumericRangeQueryParser extends QueryParser {
 
-  public NumericRangeQueryParser(Version matchVersion,
-      String field, Analyzer a) {
-    super(matchVersion, field, a);
-  }
-
-  @Override
-  public Query getRangeQuery(String field,
-      String part1,
-      String part2,
-      boolean inclusive)
-      throws ParseException {
-    TermRangeQuery query = (TermRangeQuery) // A
-    super.getRangeQuery(field, part1, part2, // A
-        inclusive); // A
-    if ("price".equals(field)) {
-      return NumericRangeQuery.newDoubleRange( // B
-          "price", // B
-          Double.parseDouble( // B
-              query.getLowerTerm()), // B
-          Double.parseDouble( // B
-              query.getUpperTerm()), // B
-          query.includesLower(), // B
-          query.includesUpper()); // B
-    } else {
-      return query; // C
+    public NumericRangeQueryParser(Version matchVersion, String field, Analyzer a) {
+        super(matchVersion, field, a);
     }
-  }
+
+    @Override
+    public Query getRangeQuery(String field, String part1, String part2, boolean inclusive) throws ParseException {
+        TermRangeQuery query = (TermRangeQuery) // A
+        super.getRangeQuery(field, part1, part2, // A
+                        inclusive); // A
+        if ("price".equals(field)) {
+            return NumericRangeQuery.newDoubleRange( // B
+                            "price", // B
+                            Double.parseDouble( // B
+                            query.getLowerTerm()), // B
+                            Double.parseDouble( // B
+                            query.getUpperTerm()), // B
+                            query.includesLower(), // B
+                            query.includesUpper()); // B
+        } else {
+            return query; // C
+        }
+    }
 
 }

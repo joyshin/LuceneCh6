@@ -11,25 +11,25 @@ import org.junit.Test;
 
 public class CustomQueryParserTest {
 
-  @Test
-  public void testCustomQueryParser() {
-    final QueryParser parser = new CustomQueryParser(Version.LUCENE_35, "field", new StandardAnalyzer(
-        Version.LUCENE_35));
+    @Test
+    public void testCustomQueryParser() {
+        final QueryParser parser = new CustomQueryParser(Version.LUCENE_35, "field", new StandardAnalyzer(
+                        Version.LUCENE_35));
 
-    try {
-      parser.parse("a?t");// 내부적으로 제공하는 QueryParser를 이용한다.
-      System.out.println("Wildcard queries should not be allowed");
-    } catch (ParseException expected) {
-      // expected
-      assertTrue(true);
-    }
+        try {
+            parser.parse("a?t");// 내부적으로 제공하는 QueryParser를 이용한다.
+            System.out.println("Wildcard queries should not be allowed");
+        } catch (ParseException expected) {
+            // expected
+            assertTrue(true);
+        }
 
-    try {
-      parser.parse("xunit~");
-      System.out.println("Fuzzy queries should not be allowed");
-    } catch (ParseException expected) {
-      // expected
-      assertTrue(true);
+        try {
+            parser.parse("xunit~");
+            System.out.println("Fuzzy queries should not be allowed");
+        } catch (ParseException expected) {
+            // expected
+            assertTrue(true);
+        }
     }
-  }
 }

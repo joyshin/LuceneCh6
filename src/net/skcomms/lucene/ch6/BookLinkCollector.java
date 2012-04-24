@@ -27,42 +27,42 @@ import org.apache.lucene.search.Scorer;
 
 // From chapter 6
 public class BookLinkCollector extends Collector {
-  private final Map<String, String> documents = new HashMap<String, String>();
-  private Scorer scorer;
-  private String[] urls;
-  private String[] titles;
+    private final Map<String, String> documents = new HashMap<String, String>();
+    private Scorer                    scorer;
+    private String[]                  urls;
+    private String[]                  titles;
 
-  @Override
-  public boolean acceptsDocsOutOfOrder() {
-    return true; // #A
-  }
-
-  @Override
-  public void collect(int docID) {
-    try {
-      String url = this.urls[docID]; // #C
-      String title = this.titles[docID]; // #C
-      this.documents.put(url, title); // #C
-      System.out.println(title + ":" + this.scorer.score());
-    } catch (IOException e) {
-      // ignore
+    @Override
+    public boolean acceptsDocsOutOfOrder() {
+        return true; // #A
     }
-  }
 
-  public Map<String, String> getLinks() {
-    return Collections.unmodifiableMap(this.documents);
-  }
+    @Override
+    public void collect(int docID) {
+        try {
+            String url = this.urls[docID]; // #C
+            String title = this.titles[docID]; // #C
+            this.documents.put(url, title); // #C
+            System.out.println(title + ":" + this.scorer.score());
+        } catch (IOException e) {
+            // ignore
+        }
+    }
 
-  @Override
-  public void setNextReader(IndexReader reader, int docBase) throws IOException {
-    this.urls = FieldCache.DEFAULT.getStrings(reader, "url"); // #B
-    this.titles = FieldCache.DEFAULT.getStrings(reader, "title2"); // #B
-  }
+    public Map<String, String> getLinks() {
+        return Collections.unmodifiableMap(this.documents);
+    }
 
-  @Override
-  public void setScorer(Scorer scorer) {
-    this.scorer = scorer;
-  }
+    @Override
+    public void setNextReader(IndexReader reader, int docBase) throws IOException {
+        this.urls = FieldCache.DEFAULT.getStrings(reader, "url"); // #B
+        this.titles = FieldCache.DEFAULT.getStrings(reader, "title2"); // #B
+    }
+
+    @Override
+    public void setScorer(Scorer scorer) {
+        this.scorer = scorer;
+    }
 }
 
 /*

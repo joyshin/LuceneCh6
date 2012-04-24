@@ -18,64 +18,61 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.util.Version;
 
 public class NumericQueryParserTest extends TestCase {
-  private Analyzer analyzer;
+    private Analyzer      analyzer;
 
-  private IndexSearcher searcher;
+    private IndexSearcher searcher;
 
-  private Directory dir;
+    private Directory     dir;
 
-  @Override
-  protected void setUp() throws Exception {
-    this.analyzer = new WhitespaceAnalyzer();
-    this.dir = TestUtil.getBookIndexDirectory();
-    this.searcher = new IndexSearcher(this.dir, true);
-  }
+    @Override
+    protected void setUp() throws Exception {
+        this.analyzer = new WhitespaceAnalyzer();
+        this.dir = TestUtil.getBookIndexDirectory();
+        this.searcher = new IndexSearcher(this.dir, true);
+    }
 
-  /*
-   * #A Get super()'s default TermRangeQuery #B Create matching
-   * NumericRangeQuery #C Return default TermRangeQuery
-   */
+    /*
+     * #A Get super()'s default TermRangeQuery #B Create matching
+     * NumericRangeQuery #C Return default TermRangeQuery
+     */
 
-  @Override
-  protected void tearDown() throws Exception {
-    this.searcher.close();
-    this.dir.close();
-  }
+    @Override
+    protected void tearDown() throws Exception {
+        this.searcher.close();
+        this.dir.close();
+    }
 
-  public void testDateRangeQuery() throws Exception {
-    String expression = "pubmonth:[01/01/2010 TO 06/01/2010]";
+    public void testDateRangeQuery() throws Exception {
+        String expression = "pubmonth:[01/01/2010 TO 06/01/2010]";
 
-    QueryParser parser = new NumericDateRangeQueryParser(Version.LUCENE_30,
-        "subject", this.analyzer);
+        QueryParser parser = new NumericDateRangeQueryParser(Version.LUCENE_30, "subject", this.analyzer);
 
-    parser.setDateResolution("pubmonth", DateTools.Resolution.MONTH); // 1
-    parser.setLocale(Locale.US);
+        parser.setDateResolution("pubmonth", DateTools.Resolution.MONTH); // 1
+        parser.setLocale(Locale.US);
 
-    Query query = parser.parse(expression);
-    System.out.println(expression + " parsed to " + query);
+        Query query = parser.parse(expression);
+        System.out.println(expression + " parsed to " + query);
 
-    TopDocs matches = this.searcher.search(query, 10);
-    assertTrue("expecting at least one result !", matches.totalHits > 0);
-  }
+        TopDocs matches = this.searcher.search(query, 10);
+        assertTrue("expecting at least one result !", matches.totalHits > 0);
+    }
 
-  /*
-   * 1 Tell QueryParser date resolution
-   */
+    /*
+     * 1 Tell QueryParser date resolution
+     */
 
-  public void testDefaultDateRangeQuery() throws Exception {
-    QueryParser parser = new QueryParser(Version.LUCENE_30,
-        "subject", this.analyzer);
-    Query query = parser.parse("pubmonth:[1/1/04 TO 12/31/04]");
-    System.out.println("default date parsing: " + query);
-  }
+    public void testDefaultDateRangeQuery() throws Exception {
+        QueryParser parser = new QueryParser(Version.LUCENE_30, "subject", this.analyzer);
+        Query query = parser.parse("pubmonth:[1/1/04 TO 12/31/04]");
+        System.out.println("default date parsing: " + query);
+    }
 
-  public void testNumericRangeQuery() throws Exception {
-    String expression = "price:[10 TO 20]";
+    public void testNumericRangeQuery() throws Exception {
+        String expression = "price:[10 TO 20]";
 
-    QueryParser parser = new NumericRangeQueryParser(Version.LUCENE_30,
-        "subject", this.analyzer);
+        QueryParser parser = new NumericRangeQueryParser(Version.LUCENE_30, "subject", this.analyzer);
 
-    Query query = parser.parse(expression);
-    System.out.println(expression + " parsed to " + query);
-  }
+        Query query = parser.parse(expression);
+        System.out.println(expression + " parsed to " + query);
+    }
 }
