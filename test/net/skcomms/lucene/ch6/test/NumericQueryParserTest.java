@@ -18,11 +18,11 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.util.Version;
 
 public class NumericQueryParserTest extends TestCase {
-    private Analyzer      analyzer;
+    private Analyzer analyzer;
 
     private IndexSearcher searcher;
 
-    private Directory     dir;
+    private Directory dir;
 
     @Override
     protected void setUp() throws Exception {
@@ -45,7 +45,8 @@ public class NumericQueryParserTest extends TestCase {
     public void testDateRangeQuery() throws Exception {
         String expression = "pubmonth:[01/01/2010 TO 06/01/2010]";
 
-        QueryParser parser = new NumericDateRangeQueryParser(Version.LUCENE_30, "subject", this.analyzer);
+        QueryParser parser = new NumericDateRangeQueryParser(Version.LUCENE_30,
+                "subject", this.analyzer);
 
         parser.setDateResolution("pubmonth", DateTools.Resolution.MONTH); // 1
         parser.setLocale(Locale.US);
@@ -55,6 +56,9 @@ public class NumericQueryParserTest extends TestCase {
 
         TopDocs matches = this.searcher.search(query, 10);
         assertTrue("expecting at least one result !", matches.totalHits > 0);
+        System.out
+                .println("assertTrue(\"expecting at least one result !\", matches.totalHits > 0)");
+        System.out.println("matches.totalHits: " + matches.totalHits + "\n");
     }
 
     /*
@@ -62,7 +66,8 @@ public class NumericQueryParserTest extends TestCase {
      */
 
     public void testDefaultDateRangeQuery() throws Exception {
-        QueryParser parser = new QueryParser(Version.LUCENE_30, "subject", this.analyzer);
+        QueryParser parser = new QueryParser(Version.LUCENE_30, "subject",
+                this.analyzer);
         Query query = parser.parse("pubmonth:[1/1/04 TO 12/31/04]");
         System.out.println("default date parsing: " + query);
     }
@@ -70,7 +75,8 @@ public class NumericQueryParserTest extends TestCase {
     public void testNumericRangeQuery() throws Exception {
         String expression = "price:[10 TO 20]";
 
-        QueryParser parser = new NumericRangeQueryParser(Version.LUCENE_30, "subject", this.analyzer);
+        QueryParser parser = new NumericRangeQueryParser(Version.LUCENE_30,
+                "subject", this.analyzer);
 
         Query query = parser.parse(expression);
         System.out.println(expression + " parsed to " + query);

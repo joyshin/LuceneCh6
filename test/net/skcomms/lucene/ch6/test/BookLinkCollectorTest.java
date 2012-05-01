@@ -18,17 +18,16 @@ public class BookLinkCollectorTest {
 
     @Test
     public void testCollecting() throws Exception {
+        Directory dir = TestUtil.getBookIndexDirectory();
         TermQuery query = new TermQuery(new Term("contents", "junit"));
-        // IndexSearcher searcher = new
-        // IndexSearcher(TestUtil.getBookIndexDirectory());
-        Directory directory = TestUtil.getBookIndexDirectory();
-        IndexSearcher searcher = new IndexSearcher(directory);
+        IndexSearcher searcher = new IndexSearcher(dir);
 
         BookLinkCollector collector = new BookLinkCollector();
         searcher.search(query, collector);
 
-        Map linkMap = collector.getLinks();
-        assertEquals("Lucene in Action", linkMap.get("http://www.manning.com/hatcher2/"));
+        Map<String, String> linkMap = collector.getLinks();
+        assertEquals("ant in action",
+                linkMap.get("http://www.manning.com/loughran"));
         searcher.close();
     }
 }

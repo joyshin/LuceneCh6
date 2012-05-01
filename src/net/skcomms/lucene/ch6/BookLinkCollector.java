@@ -28,9 +28,9 @@ import org.apache.lucene.search.Scorer;
 // From chapter 6
 public class BookLinkCollector extends Collector {
     private final Map<String, String> documents = new HashMap<String, String>();
-    private Scorer                    scorer;
-    private String[]                  urls;
-    private String[]                  titles;
+    private Scorer scorer;
+    private String[] urls;
+    private String[] titles;
 
     @Override
     public boolean acceptsDocsOutOfOrder() {
@@ -38,7 +38,7 @@ public class BookLinkCollector extends Collector {
     }
 
     @Override
-    public void collect(int docID) {
+    public void collect(final int docID) {
         try {
             String url = this.urls[docID]; // #C
             String title = this.titles[docID]; // #C
@@ -54,13 +54,14 @@ public class BookLinkCollector extends Collector {
     }
 
     @Override
-    public void setNextReader(IndexReader reader, int docBase) throws IOException {
+    public void setNextReader(final IndexReader reader, final int docBase)
+            throws IOException {
         this.urls = FieldCache.DEFAULT.getStrings(reader, "url"); // #B
         this.titles = FieldCache.DEFAULT.getStrings(reader, "title2"); // #B
     }
 
     @Override
-    public void setScorer(Scorer scorer) {
+    public void setScorer(final Scorer scorer) {
         this.scorer = scorer;
     }
 }

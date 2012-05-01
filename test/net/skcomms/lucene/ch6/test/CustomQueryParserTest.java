@@ -13,8 +13,8 @@ public class CustomQueryParserTest {
 
     @Test
     public void testCustomQueryParser() {
-        final QueryParser parser = new CustomQueryParser(Version.LUCENE_35, "field", new StandardAnalyzer(
-                        Version.LUCENE_35));
+        QueryParser parser = new CustomQueryParser(Version.LUCENE_35, "field",
+                new StandardAnalyzer(Version.LUCENE_35));
 
         try {
             parser.parse("a?t");// 내부적으로 제공하는 QueryParser를 이용한다.
@@ -22,6 +22,7 @@ public class CustomQueryParserTest {
         } catch (ParseException expected) {
             // expected
             assertTrue(true);
+            System.out.println("parser.parse(\"a?t\")");
         }
 
         try {
@@ -30,6 +31,7 @@ public class CustomQueryParserTest {
         } catch (ParseException expected) {
             // expected
             assertTrue(true);
+            System.out.println("parser.parse(\"xunit~\")");
         }
     }
 }
