@@ -7,6 +7,7 @@ import java.util.Map;
 import net.skcomms.lucene.ch6.BookLinkCollector;
 import net.skcomms.lucene.ch6.TestUtil;
 
+import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.TermQuery;
@@ -19,10 +20,10 @@ public class BookLinkCollectorTest {
     @Test
     public void testCollecting() throws Exception {
         TermQuery query = new TermQuery(new Term("contents", "junit"));
-        // IndexSearcher searcher = new
-        // IndexSearcher(TestUtil.getBookIndexDirectory());
         Directory directory = TestUtil.getBookIndexDirectory();
-        IndexSearcher searcher = new IndexSearcher(directory);
+
+        IndexReader reader = IndexReader.open(directory);
+        IndexSearcher searcher = new IndexSearcher(reader);
 
         BookLinkCollector collector = new BookLinkCollector();
         searcher.search(query, collector);
