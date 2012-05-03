@@ -37,21 +37,23 @@ public class CustomQueryParser extends QueryParser {
      */
     @Override
     protected Query getFieldQuery(String field, String queryText, int slop) throws ParseException {
+        // 검색어 분석 결과 질의 형태를 결정하는 작업은 QueryParser에 구현된 것을 그대로 사용
         Query orig = super.getFieldQuery(field, queryText, slop); // #1
 
+        // PhraseQuery라면 다른 질의로 변경하고, 아니라면 해당 질의를 즉시 반환
         if (!(orig instanceof PhraseQuery)) { // #2
             return orig; // #2
         } // #2
 
         PhraseQuery pq = (PhraseQuery) orig;
-        Term[] terms = pq.getTerms(); // #3
+        Term[] terms = pq.getTerms(); // #3 // 원래의 PhraseQuery에서 모든텀을 가져온다
         SpanTermQuery[] clauses = new SpanTermQuery[terms.length];
         for (int i = 0; i < terms.length; i++) {
             clauses[i] = new SpanTermQuery(terms[i]);
         }
 
-        SpanNearQuery query = new SpanNearQuery( // #4
-                        clauses, slop, true); // #4
+        // 마지막으로 원래의 PhraseQuery에서 가져온 모든 텀을 인자로 SpannearQuery를 생성한다
+        SpanNearQuery query = new SpanNearQuery(clauses, slop, true); // #4
 
         return query;
     }

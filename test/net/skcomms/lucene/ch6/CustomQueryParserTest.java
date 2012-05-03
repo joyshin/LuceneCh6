@@ -1,4 +1,4 @@
-package net.skcomms.lucene.ch6.test;
+package net.skcomms.lucene.ch6;
 
 import static org.junit.Assert.assertTrue;
 import net.skcomms.lucene.ch6.CustomQueryParser;
