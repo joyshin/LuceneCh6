@@ -37,7 +37,7 @@ public class BulletinPayloadsAnalyzer extends Analyzer {
 
     @Override
     public TokenStream tokenStream(String fieldName, Reader reader) {
-        BulletinPayloadsFilter stream = new BulletinPayloadsFilter(new StandardAnalyzer(Version.LUCENE_30).tokenStream(
+        BulletinPayloadsFilter stream = new BulletinPayloadsFilter(new StandardAnalyzer(Version.LUCENE_35).tokenStream(
                         fieldName, reader), this.boost);
         stream.setIsBulletin(this.isBulletin);
         return stream;

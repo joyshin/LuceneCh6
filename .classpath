@@ -6,5 +6,7 @@
 	<classpathentry kind="lib" path="D:/0. Lucene 3.5/lucene-3.5.0-Lib/lucene-core-3.5.0.jar" sourcepath="D:/0. Lucene 3.5/lucene-3.5.0-src/lucene-3.5.0"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="D:/0. Lucene 3.5/lucene-3.5.0-Lib/lucene-core-3.5.0-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/0. Lucene 3.5/lucene-3.5.0-Lib/contrib/demo/lucene-demo-3.5.0.jar"/>
+	<classpathentry kind="lib" path="D:/0. Lucene 3.5/lucene-3.5.0-Lib/contrib/analyzers/common/lucene-analyzers-3.5.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
